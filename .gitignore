@@ -1,0 +1,179 @@
+﻿# =====================================================
+# DeskScribe .gitignore
+# Target: .NET 9.0 / JetBrains Rider / cross-platform
+# =====================================================
+
+############################
+# Core build artifacts
+############################
+bin/
+obj/
+out/
+build/
+[Bb]uild[Ll]og.*
+*.cache
+*.log
+*.tlog
+*.tmp
+*.tmp_proj
+*.tmp_files/
+*.tmp_props/
+*.tmp_targets/
+*.zip
+*.tar.gz
+*.7z
+
+############################
+# JetBrains Rider / IntelliJ
+############################
+.idea/
+*.iml
+.idea_modules/
+.idea/.idea.*
+.idea/workspace.xml
+.idea/shelf/
+.idea/httpRequests/
+.idea/.idea/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/caches/
+.idea/libraries/
+.idea/tasks.xml
+.idea/modules.xml
+.idea/gradle.xml
+
+############################
+# Visual Studio / VSCode
+############################
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.dbmdl
+*.jfm
+*.pdb
+*.opendb
+*.VC.db
+*.VC.opendb
+
+############################
+# DotNet artifacts
+############################
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.snupkg
+*.nuspec
+*.deps.json
+*.runtimeconfig.json
+
+############################
+# Test / coverage outputs
+############################
+TestResults/
+coverage.cobertura.xml
+coverage.opencover.xml
+coverage.json
+coverage.info
+*.coverage
+*.coveragexml
+*.trx
+
+############################
+# Logs / diagnostics
+############################
+*.log
+*.svclog
+*.bak
+*.old
+*.orig
+*.patch
+*.rej
+*.stackdump
+*.pid
+*.seed
+*.dmp
+
+############################
+# Temporary / cache
+############################
+temp/
+tmp/
+.cache/
+*.swp
+*.swo
+*.swn
+*.bak
+*.backup
+*.tmp
+*.temp
+*.lock
+
+############################
+# OS files
+############################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+# Linux
+*~
+.nfs*
+
+############################
+# IDE-specific user data
+############################
+*.DotSettings.user
+*.sln.iml
+*.ipr
+*.iws
+
+############################
+# Package managers
+############################
+node_modules/
+dist/
+bower_components/
+wwwroot/lib/
+
+############################
+# Native / C++ (future)
+############################
+*.obj
+*.lib
+*.exp
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.manifest
+*.res
+*.rc
+*.pch
+*.o
+*.a
+*.so
+*.dylib
+
+############################
+# Rider local plugins or caches
+############################
+.idea/.idea.pluginName/
+.idea/system/
+.idea/plugins
