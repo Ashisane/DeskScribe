@@ -6,10 +6,10 @@
         WindowState="Maximized"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="#01FFFFFF"
+        Background="#01000000"
         Topmost="True"
         KeyDown="OnKeyDown">
 
     <!-- Slightly visible tint so you know it’s active -->
-    <Canvas x:Name="DrawCanvas" Background="#01FFFFFF"/>
+    <Canvas x:Name="DrawCanvas" Background="#01000000"/>
 </Window>
