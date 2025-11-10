@@ -125,6 +125,9 @@ Tests live under `/tests` and follow the MSTest convention.
 
 Contributions are welcome!
 
+Track development progress and feature planning on the official Trello board:  
+👉 [DeskScribe Trello Board](https://trello.com/invite/b/69118155c62d6d5c7bcd7585/ATTI9f038cc9933116a34f82600d423355da427587DF/deskscribe)
+
 1. Fork the repo
 2. Create a feature branch (`git checkout -b feature/awesome-idea`)
 3. Commit your changes (`git commit -m "feat: add awesome idea"`)
