@@ -61,6 +61,12 @@ namespace DeskScribe.App
             {
                 Close();
             }
+            else if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + C → Clear the entire canvas
+                DrawCanvas.Children.Clear();
+                e.Handled = true;
+            }
         }
     }
 }
