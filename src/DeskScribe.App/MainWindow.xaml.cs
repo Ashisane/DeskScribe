@@ -101,6 +101,16 @@ namespace DeskScribe.App
                 Title = $"DeskScribe Overlay (Brush Size: {_currentStrokeThickness})";
                 e.Handled = true;
             }
+            else if (e.Key == Key.Z && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + Z -> undo last stroke (remove the most recently added child)
+                if (DrawCanvas.Children.Count > 0)
+                {
+                    DrawCanvas.Children.RemoveAt(DrawCanvas.Children.Count - 1);
+                }
+                e.Handled = true;
+            }
+
             else if (e.Key == Key.Escape)
             {
                 Close();
