@@ -18,6 +18,8 @@ namespace DeskScribe.App
         };
 
         private int _currentBrushIndex = 0;
+        private double _currentStrokeThickness = 2;
+
         private Brush _currentBrush;
         private bool _isDrawingEnabled = true;
         private bool _isMouseDown;
@@ -42,7 +44,7 @@ namespace DeskScribe.App
             _currentLine = new Polyline
             {
                 Stroke = _currentBrush,
-                StrokeThickness = 2
+                StrokeThickness = _currentStrokeThickness
             };
 
             _currentLine.Points.Add(e.GetPosition(DrawCanvas));
@@ -83,6 +85,20 @@ namespace DeskScribe.App
                 _currentBrushIndex = (_currentBrushIndex + 1) % _brushes.Length;
                 _currentBrush = _brushes[_currentBrushIndex];
                 Title = $"DeskScribe Overlay (Brush: {_currentBrush.ToString().Replace("System.Windows.Media.", "")})";
+                e.Handled = true;
+            }
+            else if (e.Key == Key.OemPlus && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + '+' → increase stroke
+                _currentStrokeThickness = Math.Min(_currentStrokeThickness + 1, 20);
+                Title = $"DeskScribe Overlay (Brush Size: {_currentStrokeThickness})";
+                e.Handled = true;
+            }
+            else if (e.Key == Key.OemMinus && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + '-' → decrease stroke
+                _currentStrokeThickness = Math.Max(_currentStrokeThickness - 1, 1);
+                Title = $"DeskScribe Overlay (Brush Size: {_currentStrokeThickness})";
                 e.Handled = true;
             }
             else if (e.Key == Key.Escape)
