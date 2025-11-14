@@ -2,6 +2,10 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.IO;
+using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
+
 
 namespace DeskScribe.App
 {
@@ -24,13 +28,24 @@ namespace DeskScribe.App
         private bool _isDrawingEnabled = true;
         private bool _isMouseDown;
         private Polyline? _currentLine;
+        
+        private readonly string _saveDir =
+            System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "DeskScribe");
+        private readonly string _configDir =
+            System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DeskScribe");
+        private readonly string _configPath;
 
         public MainWindow()
         {
             InitializeComponent();
             _currentBrush = _brushes[_currentBrushIndex];
             Cursor = Cursors.Pen;
+            
+            Directory.CreateDirectory(_saveDir);
+            Directory.CreateDirectory(_configDir);
 
+            _configPath = System.IO.Path.Combine(_configDir, "config.json");
+            
             MouseDown += OnMouseDown;
             MouseMove += OnMouseMove;
             MouseUp   += OnMouseUp;
@@ -110,11 +125,49 @@ namespace DeskScribe.App
                 }
                 e.Handled = true;
             }
-
+            else if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + S -> save canvas as png
+                string saved = SaveCanvasToPng();
+                Title = $"DeskScribe Overlay (Saved: {System.IO.Path.GetFileName(saved)})";
+                e.Handled = true;
+            }
             else if (e.Key == Key.Escape)
             {
                 Close();
             }
+        }
+        
+        private string SaveCanvasToPng()
+        {
+            // File path
+            string fileName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
+            string filePath = System.IO.Path.Combine(_saveDir, fileName);
+
+            // Render canvas into a bitmap
+            RenderTargetBitmap rtb = new RenderTargetBitmap(
+                (int)DrawCanvas.ActualWidth,
+                (int)DrawCanvas.ActualHeight,
+                96d, 96d,
+                PixelFormats.Pbgra32 // full alpha support
+            );
+
+            rtb.Render(DrawCanvas);
+
+            // Encode PNG with transparency
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                encoder.Save(fs);
+
+            // Save last saved file path into config.json
+            File.WriteAllText(_configPath, JsonConvert.SerializeObject(new
+            {
+                lastSavedImage = filePath
+            }, Formatting.Indented));
+
+            return filePath;
         }
     }
 }
