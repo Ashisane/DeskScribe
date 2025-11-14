@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -34,6 +35,15 @@ namespace DeskScribe.App
         private readonly string _configDir =
             System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DeskScribe");
         private readonly string _configPath;
+        
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool SystemParametersInfo(
+            int uAction, int uParam, string lpvParam, int fuWinIni);
+
+        private const int SPI_SETDESKWALLPAPER = 20;
+        private const int SPIF_UPDATEINIFILE = 0x01;
+        private const int SPIF_SENDWININICHANGE = 0x02;
+
 
         public MainWindow()
         {
@@ -45,6 +55,9 @@ namespace DeskScribe.App
             Directory.CreateDirectory(_configDir);
 
             _configPath = System.IO.Path.Combine(_configDir, "config.json");
+            
+            RenderOptions.SetBitmapScalingMode(DrawCanvas, BitmapScalingMode.NearestNeighbor);
+            RenderOptions.SetEdgeMode(DrawCanvas, EdgeMode.Aliased);
             
             MouseDown += OnMouseDown;
             MouseMove += OnMouseMove;
@@ -130,8 +143,33 @@ namespace DeskScribe.App
                 // Ctrl + S -> save canvas as png
                 string saved = SaveCanvasToPng();
                 Title = $"DeskScribe Overlay (Saved: {System.IO.Path.GetFileName(saved)})";
+                DrawCanvas.UpdateLayout();
+                DrawCanvas.InvalidateVisual();
+
                 e.Handled = true;
             }
+            else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + B -> set saved png to background
+                string? pngPath = GetLastSavedImagePath();
+
+                if (pngPath == null || !File.Exists(pngPath))
+                {
+                    Title = "DeskScribe Overlay (No saved image to set)";
+                    e.Handled = true;
+                    return;
+                }
+
+                string bmpPath = ConvertPngToBmp(pngPath);
+                SetWallpaper(bmpPath);
+
+                Title = "DeskScribe Overlay (Wallpaper Set)";
+                DrawCanvas.UpdateLayout();
+                DrawCanvas.InvalidateVisual();
+                
+                e.Handled = true;
+            }
+
             else if (e.Key == Key.Escape)
             {
                 Close();
@@ -168,6 +206,52 @@ namespace DeskScribe.App
             }, Formatting.Indented));
 
             return filePath;
+        }
+        private string? GetLastSavedImagePath()
+        {
+            if (!File.Exists(_configPath))
+                return null;
+
+            try
+            {
+                var json = File.ReadAllText(_configPath);
+                dynamic cfg = JsonConvert.DeserializeObject(json);
+
+                return cfg?.lastSavedImage;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        private string ConvertPngToBmp(string pngPath)
+        {
+            string bmpPath = System.IO.Path.ChangeExtension(pngPath, ".bmp");
+
+            using (var pngStream = File.OpenRead(pngPath))
+            {
+                var decoder = new PngBitmapDecoder(pngStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                BitmapSource png = decoder.Frames[0];
+
+                BitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(png));
+
+                using (var fs = File.Open(bmpPath, FileMode.Create))
+                {
+                    encoder.Save(fs);
+                }
+            }
+
+            return bmpPath;
+        }
+        private void SetWallpaper(string bmpPath)
+        {
+            SystemParametersInfo(
+                SPI_SETDESKWALLPAPER,
+                0,
+                bmpPath,
+                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE
+            );
         }
     }
 }
