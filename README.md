@@ -1,26 +1,27 @@
 ﻿<div align="center">
 
 # DeskScribe
-### Draw. Doodle. Think — right on your desktop.
+### Draw. Doodle. Think — directly on your desktop.
 
-![DeskScribe Preview](docs/preview.png)
-
-**DeskScribe** is a lightweight, always-available desktop overlay that lets you draw or jot down ideas directly on your Windows desktop — no need to open any app or lose your flow.
+A lightweight transparent overlay that lets you sketch, annotate, and capture ideas instantly without switching apps.
 
 </div>
 
 ---
 
-## Features
+## Features (v0.3.0)
 
-- Persistent overlay — write or sketch directly on your desktop wallpaper.
-- Smooth pen drawing with adjustable color & brush size.
-- Ultra-lightweight — optimized for minimal CPU and RAM use.
-- Autosave your doodles between sessions.
-- Quick toggle (e.g., Alt + D) to enter draw mode instantly.
-- Export your notes as `.png` or set as wallpaper.
-- Auto-start on login — available the moment you unlock your screen.
-- Open source & modular — clean architecture designed for future expansion.
+- Fullscreen transparent drawing overlay
+- Adjustable brush colors (Ctrl + K)
+- Adjustable brush thickness (Ctrl + + / Ctrl + -)
+- Undo last stroke (Ctrl + Z)
+- Clear entire board (Ctrl + C)
+- Save your drawing as a transparent PNG (Ctrl + S)
+- Load your last saved sketch (Ctrl + O)
+- Set drawing as desktop wallpaper (Ctrl + B)
+- Close overlay instantly (Esc)
+
+DeskScribe is designed to stay out of your way and be available exactly when you need it.
 
 ---
 
@@ -40,17 +41,16 @@
 ```
 DeskScribe/
 ├── src/
-│   ├── DeskScribe.App/         # WPF front-end and main window overlay
-│   └── DeskScribe.Core/        # Core logic: drawing, strokes, persistence
+│   └── DeskScribe.App/          # Main WPF overlay application
 ├── tests/
-│   └── DeskScribe.Core.Tests/  # Unit tests for core logic
+│   └── DeskScribe.App.Tests/    # Future test suite
 ├── docs/
-│   ├── preview.png             # Screenshot for README
-│   └── architecture.md         # Optional deeper documentation
+│   └── preview.png              # Optional README preview
 ├── .github/
-│   └── workflows/              # CI/CD pipelines
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows/               # Future CI
 ├── .gitignore
-├── .editorconfig
+├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
@@ -59,25 +59,21 @@ DeskScribe/
 
 ## Getting Started
 
-### Prerequisites
-- [.NET SDK 9.0](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [JetBrains Rider](https://www.jetbrains.com/rider/)
+### Requirements
 - Windows 10 or later
+- .NET 9.0 SDK
+- JetBrains Rider / Visual Studio / VS Code with C# Dev Kit
 
-### Clone & Build
+### Clone & Run
 
 ```bash
-# Clone repository
 git clone https://github.com/<your-username>/DeskScribe.git
 cd DeskScribe
 
-# Restore dependencies
+# Restore
 dotnet restore
 
-# Build solution
-dotnet build
-
-# Run the app (WPF project)
+# Run the overlay app
 dotnet run --project src/DeskScribe.App
 ```
 
@@ -85,39 +81,44 @@ dotnet run --project src/DeskScribe.App
 
 ## Usage
 
-Once the app starts:
+| Shortcut | Action |
+|---------|--------|
+| **Alt + D** | Toggle draw/view mode |
+| **Ctrl + S** | Save canvas as transparent PNG |
+| **Ctrl + O** | Load last saved PNG |
+| **Ctrl + B** | Set saved PNG as desktop wallpaper |
+| **Ctrl + C** | Clear canvas (strokes + background) |
+| **Ctrl + K** | Cycle brush colors |
+| **Ctrl + + / Ctrl + -** | Change brush thickness |
+| **Ctrl + Z** | Undo last stroke |
+| **Esc** | Close overlay |
 
-- Press **Alt + D** to toggle draw mode.
-- Draw anywhere on the desktop using your mouse or stylus.
-- Press **Esc** or toggle again to exit draw mode.
-- Use the system tray icon to *Save*, *Clear*, or *Exit*.
+Saved images are located at:
 
-All your strokes are automatically saved between sessions and reloaded when you log back in.
+```
+Pictures/DeskScribe/
+```
+
+App config (last saved image path):
+
+```
+AppData/Roaming/DeskScribe/config.json
+```
 
 ---
 
 ## Roadmap
 
-| Phase | Feature | Status      |
-|-------|----------|-------------|
-| 1     | Transparent overlay & draw mode toggle | In Progress |
-| 2     | System tray integration | Planned     |
-| 3     | Stroke persistence & save as PNG | Planned     |
-| 4     | Auto-start & unlock event handling | Planned     |
-| 5     | Direct2D native rendering engine | Future      |
-| 6     | Cloud sync / collaborative notes | Idea        |
+| Version | Features | Status |
+|---------|----------|--------|
+| **v0.1.0** | Transparent overlay + drawing | Done |
+| **v0.2.0** | Colors, brush size, undo, clear | Done |
+| **v0.3.0** | Save, load, set wallpaper | Done |
+| **v0.4.0** | System tray, global hotkeys, auto-start | Planned |
+| **v1.0.0** | Vector stroke files, full stroke persistence | Planned |
+| **Future** | Direct2D renderer, cloud sync | Ideas |
 
 See [docs/architecture.md](docs/architecture.md) for module-level breakdowns.
-
----
-
-## Running Tests
-
-```bash
-dotnet test
-```
-
-Tests live under `/tests` and follow the MSTest convention.
 
 ---
 

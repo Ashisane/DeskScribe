@@ -10,6 +10,14 @@
         Topmost="True"
         KeyDown="OnKeyDown">
 
-    <!-- Slightly visible tint so you know it’s active -->
-    <Canvas x:Name="DrawCanvas" Background="#01000000"/>
+    <Grid x:Name="RootGrid">
+        <Image x:Name="BackgroundImage"
+               Stretch="UniformToFill"
+               Opacity="1"
+               IsHitTestVisible="False" />
+    
+        <Canvas x:Name="DrawCanvas"
+                Background="#02000000" />
+    </Grid>
+
 </Window>
