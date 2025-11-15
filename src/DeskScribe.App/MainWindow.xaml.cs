@@ -105,6 +105,19 @@ namespace DeskScribe.App
             {
                 // Ctrl + C → Clear the entire canvas
                 DrawCanvas.Children.Clear();
+                _currentLine = null;
+                _isMouseDown = false;
+
+                // Clear background PNG
+                BackgroundImage.Source = null;
+
+                // DO NOT delete config.json because user wants to keep last saved reference
+
+                Title = "DeskScribe Overlay (Canvas Cleared)";
+
+                DrawCanvas.UpdateLayout();
+                DrawCanvas.InvalidateVisual();
+
                 e.Handled = true;
             }
             else if (e.Key == Key.K && Keyboard.Modifiers == ModifierKeys.Control)
@@ -169,7 +182,14 @@ namespace DeskScribe.App
                 
                 e.Handled = true;
             }
-
+            else if (e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                // Ctrl + O -> open prev saved image on canvas
+                LoadLastSavedImage();
+                DrawCanvas.UpdateLayout();
+                DrawCanvas.InvalidateVisual();
+                e.Handled = true;
+            }
             else if (e.Key == Key.Escape)
             {
                 Close();
@@ -184,13 +204,15 @@ namespace DeskScribe.App
 
             // Render canvas into a bitmap
             RenderTargetBitmap rtb = new RenderTargetBitmap(
-                (int)DrawCanvas.ActualWidth,
-                (int)DrawCanvas.ActualHeight,
+                (int)RootGrid.ActualWidth,
+                (int)RootGrid.ActualHeight,
                 96d, 96d,
-                PixelFormats.Pbgra32 // full alpha support
+                PixelFormats.Pbgra32
             );
 
-            rtb.Render(DrawCanvas);
+            RootGrid.Measure(new Size(RootGrid.ActualWidth, RootGrid.ActualHeight));
+            RootGrid.Arrange(new Rect(new Size(RootGrid.ActualWidth, RootGrid.ActualHeight)));
+            rtb.Render(RootGrid);
 
             // Encode PNG with transparency
             PngBitmapEncoder encoder = new PngBitmapEncoder();
@@ -252,6 +274,32 @@ namespace DeskScribe.App
                 bmpPath,
                 SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE
             );
+        }
+        private void LoadLastSavedImage()
+        {
+            string? pngPath = GetLastSavedImagePath();
+
+            if (pngPath == null || !File.Exists(pngPath))
+            {
+                Title = "DeskScribe Overlay (No saved image found)";
+                return;
+            }
+
+            try
+            {
+                BitmapImage bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.UriSource = new Uri(pngPath);
+                bmp.EndInit();
+
+                BackgroundImage.Source = bmp;
+                Title = "DeskScribe Overlay (Loaded last image)";
+            }
+            catch
+            {
+                Title = "DeskScribe Overlay (Failed to load image)";
+            }
         }
     }
 }
