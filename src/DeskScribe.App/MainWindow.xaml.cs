@@ -93,15 +93,7 @@ namespace DeskScribe.App
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            // Alt + D toggle (SystemKey for Alt combos)
-            if (e.SystemKey == Key.D && Keyboard.Modifiers == ModifierKeys.Alt)
-            {
-                _isDrawingEnabled = !_isDrawingEnabled;
-                Cursor = _isDrawingEnabled ? Cursors.Pen : Cursors.Arrow;
-                Title  = _isDrawingEnabled ? "DeskScribe Overlay (Drawing)" : "DeskScribe Overlay (View)";
-                e.Handled = true;
-            }
-            else if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 // Ctrl + C → Clear the entire canvas
                 DrawCanvas.Children.Clear();

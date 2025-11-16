@@ -6,17 +6,26 @@ namespace DeskScribe.App
     public partial class App : Application
     {
         private TrayService? _tray;
+        private HotkeyService? _hotkeys;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Initialize tray service
+            // Initialize system tray
             _tray = new TrayService();
 
-            // Create and show MainWindow
+            // Create main overlay window
             MainWindow = new MainWindow();
             MainWindow.Show();
+
+            // Register global hotkeys
+            _hotkeys = new HotkeyService(MainWindow);
+            _hotkeys.HotkeyPressed += (_, _) =>
+            {
+                MainWindow.Show();
+                MainWindow.Activate();
+            };
         }
 
         private void ShowOverlay_Click(object sender, RoutedEventArgs e)
