@@ -1,37 +1,37 @@
 ﻿using System.Windows;
+using DeskScribe.App.Services;
 
 namespace DeskScribe.App
 {
     public partial class App : Application
     {
+        private TrayService? _tray;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Load embedded icon safely
-            var tray = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("TrayIcon");
-            tray.Icon = new System.Drawing.Icon(Application.GetResourceStream(
-                new Uri("pack://application:,,,/Resources/app.ico")).Stream);
+            // Initialize tray service
+            _tray = new TrayService();
 
-            // Create and show MainWindow manually
+            // Create and show MainWindow
             MainWindow = new MainWindow();
             MainWindow.Show();
         }
+
         private void ShowOverlay_Click(object sender, RoutedEventArgs e)
         {
-            if (Current.MainWindow != null)
-            {
-                Current.MainWindow.Show();
-                Current.MainWindow.Activate();
-            }
+            _tray?.ShowMainWindow();
         }
+
         private void HideOverlay_Click(object sender, RoutedEventArgs e)
         {
-            Current.MainWindow?.Hide();
+            _tray?.HideMainWindow();
         }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Shutdown();
+            _tray?.ExitApplication();
         }
     }
 }
