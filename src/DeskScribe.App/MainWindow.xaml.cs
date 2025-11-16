@@ -192,7 +192,7 @@ namespace DeskScribe.App
             }
             else if (e.Key == Key.Escape)
             {
-                Close();
+                this.Hide();
             }
         }
         
