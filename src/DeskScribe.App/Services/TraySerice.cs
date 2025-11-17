@@ -12,21 +12,20 @@ namespace DeskScribe.App.Services
         {
             _trayIcon = (TaskbarIcon)Application.Current.FindResource("TrayIcon");
 
-            // Load embedded icon
-            var iconStream = Application.GetResourceStream(
-                new Uri("pack://application:,,,/Resources/app.ico")).Stream;
-
+            var iconStream = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/app.ico")).Stream;
             _trayIcon.Icon = new System.Drawing.Icon(iconStream);
 
-            // Wire menu events
             _trayIcon.TrayMouseDoubleClick += (_, _) => ShowMainWindow();
         }
 
         public void ShowMainWindow()
         {
-            var win = Application.Current.MainWindow;
-            win?.Show();
-            win?.Activate();
+            var win = Application.Current.MainWindow as MainWindow;
+            if (win == null) return;
+
+            win.Show();
+            win.Activate();
+            win.ReactivateCanvas();
         }
 
         public void HideMainWindow()
@@ -37,6 +36,18 @@ namespace DeskScribe.App.Services
         public void ExitApplication()
         {
             Application.Current.Shutdown();
+        }
+
+        public void SaveCanvas()
+        {
+            var win = Application.Current.MainWindow as MainWindow;
+            win?.SaveCanvasPublic();
+        }
+
+        public void LoadCanvas()
+        {
+            var win = Application.Current.MainWindow as MainWindow;
+            win?.LoadCanvasPublic();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace DeskScribe.App
+namespace DeskScribe.App.Services
 {
     public class HotkeyService : IDisposable
     {
@@ -11,7 +11,6 @@ namespace DeskScribe.App
         private const int WM_HOTKEY = 0x0312;
 
         private HwndSource? _source;
-
         public event EventHandler? HotkeyPressed;
 
         [DllImport("user32.dll")]
@@ -22,15 +21,11 @@ namespace DeskScribe.App
 
         public HotkeyService(Window window)
         {
-            // Create message source for the window
             var helper = new WindowInteropHelper(window);
             _source = HwndSource.FromHwnd(helper.Handle);
-
-            if (_source == null)
-                return;
+            if (_source == null) return;
 
             _source.AddHook(WndProc);
-
             RegisterCtrlDHotkey();
         }
 
@@ -38,7 +33,6 @@ namespace DeskScribe.App
         {
             const uint MOD_CONTROL = 0x0002;
             const uint VK_D = 0x44;
-
             RegisterHotKey(_source!.Handle, HOTKEY_ID, MOD_CONTROL, VK_D);
         }
 
@@ -49,7 +43,6 @@ namespace DeskScribe.App
                 HotkeyPressed?.Invoke(this, EventArgs.Empty);
                 handled = true;
             }
-
             return IntPtr.Zero;
         }
 
