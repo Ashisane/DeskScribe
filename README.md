@@ -1,28 +1,87 @@
 ﻿<div align="center">
 
-# DeskScribe
-### Draw. Doodle. Think — right on your desktop.
+![Preview](docs/deskscribe.png)
+### Draw. Doodle. Think.
 
-![DeskScribe Preview](docs/preview.png)
+A lightweight transparent overlay for Windows that lets you sketch ideas instantly using a global hotkey.
 
-**DeskScribe** is a lightweight, always-available desktop overlay that lets you draw or jot down ideas directly on your Windows desktop — no need to open any app or lose your flow.
 
 </div>
 
 ---
 
-## Features
+# 🚀 Overview
 
-- Persistent overlay — write or sketch directly on your desktop wallpaper.
-- Smooth pen drawing with adjustable color & brush size.
-- Ultra-lightweight — optimized for minimal CPU and RAM use.
-- Autosave your doodles between sessions.
-- Quick toggle (e.g., Alt + D) to enter draw mode instantly.
-- Export your notes as `.png` or set as wallpaper.
-- Auto-start on login — available the moment you unlock your screen.
-- Open source & modular — clean architecture designed for future expansion.
+**DeskScribe** is a minimal, fast, distraction-free overlay tool for Windows.  
+Press **Ctrl + D** anytime → a transparent whiteboard appears over your desktop.  
+Draw, annotate, ideate — without switching apps or losing flow.
+
+Perfect for:
+- Thinking out loud
+- Planning workflows
+- Quick math and outlines
+- Coding/architecture notes
+- Teaching, explaining, screen recording
 
 ---
+
+# ✨ Features (v1.0.0)
+
+### Core Drawing
+- Transparent fullscreen overlay
+- Freehand drawing
+- Brush color cycle — **Ctrl + K**
+- Brush thickness **Ctrl + +** and **Ctrl + -**
+- Undo last stroke — **Ctrl + Z**
+- Clear canvas — **Ctrl + C**
+
+### Saving & Loading
+- Save canvas as PNG — **Ctrl + S**
+- Load last saved image — **Ctrl + O**
+- Set saved PNG as wallpaper — **Ctrl + B**
+
+### System-Level Features
+- Global hotkey → **Ctrl + D** opens DeskScribe from anywhere
+- Runs from system tray (show/hide/exit)
+- Autostarts with Windows
+- Installer included (via Inno Setup)
+
+---
+
+# 📦 Download
+
+➡️ **Download the latest version:**  
+https://github.com/Ashisane/DeskScribe/releases/latest
+
+You’ll find:
+- `DeskScribe-Setup.exe`
+
+---
+
+# 🛠 Installation
+
+### Option 1 — Installer (recommended)
+1. Download `DeskScribe-Setup.exe`
+2. Run installer
+3. DeskScribe will appear in your system tray
+4. Press **Ctrl + D** to open the overlay
+
+---
+
+# 🎨 Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Toggle overlay | **Ctrl + D** |
+| Save PNG | **Ctrl + S** |
+| Load last PNG | **Ctrl + O** |
+| Set as wallpaper | **Ctrl + B** |
+| Undo | **Ctrl + Z** |
+| Clear canvas | **Ctrl + C** |
+| Change brush color | **Ctrl + K** |
+| Brush size + | **Ctrl + +** |
+| Brush size - | **Ctrl + -** |
+| Hide overlay | **Esc** |
 
 ## Tech Stack
 
@@ -40,17 +99,16 @@
 ```
 DeskScribe/
 ├── src/
-│   ├── DeskScribe.App/         # WPF front-end and main window overlay
-│   └── DeskScribe.Core/        # Core logic: drawing, strokes, persistence
+│   └── DeskScribe.App/          # Main WPF overlay application
 ├── tests/
-│   └── DeskScribe.Core.Tests/  # Unit tests for core logic
+│   └── DeskScribe.App.Tests/    # Future test suite
 ├── docs/
-│   ├── preview.png             # Screenshot for README
-│   └── architecture.md         # Optional deeper documentation
+│   └── preview.png              # Optional README preview
 ├── .github/
-│   └── workflows/              # CI/CD pipelines
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows/               # Future CI
 ├── .gitignore
-├── .editorconfig
+├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
@@ -59,25 +117,21 @@ DeskScribe/
 
 ## Getting Started
 
-### Prerequisites
-- [.NET SDK 9.0](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [JetBrains Rider](https://www.jetbrains.com/rider/)
+### Requirements
 - Windows 10 or later
+- .NET 9.0 SDK
+- JetBrains Rider / Visual Studio / VS Code with C# Dev Kit
 
-### Clone & Build
+### Clone & Run
 
 ```bash
-# Clone repository
 git clone https://github.com/<your-username>/DeskScribe.git
 cd DeskScribe
 
-# Restore dependencies
+# Restore
 dotnet restore
 
-# Build solution
-dotnet build
-
-# Run the app (WPF project)
+# Run the overlay app
 dotnet run --project src/DeskScribe.App
 ```
 
@@ -85,39 +139,52 @@ dotnet run --project src/DeskScribe.App
 
 ## Usage
 
-Once the app starts:
+| Shortcut | Action |
+|---------|--------|
+| **Alt + D** | Toggle draw/view mode |
+| **Ctrl + S** | Save canvas as transparent PNG |
+| **Ctrl + O** | Load last saved PNG |
+| **Ctrl + B** | Set saved PNG as desktop wallpaper |
+| **Ctrl + C** | Clear canvas (strokes + background) |
+| **Ctrl + K** | Cycle brush colors |
+| **Ctrl + + / Ctrl + -** | Change brush thickness |
+| **Ctrl + Z** | Undo last stroke |
+| **Esc** | Close overlay |
 
-- Press **Alt + D** to toggle draw mode.
-- Draw anywhere on the desktop using your mouse or stylus.
-- Press **Esc** or toggle again to exit draw mode.
-- Use the system tray icon to *Save*, *Clear*, or *Exit*.
+Saved images are located at:
 
-All your strokes are automatically saved between sessions and reloaded when you log back in.
-
----
-
-## Roadmap
-
-| Phase | Feature | Status      |
-|-------|----------|-------------|
-| 1     | Transparent overlay & draw mode toggle | In Progress |
-| 2     | System tray integration | Planned     |
-| 3     | Stroke persistence & save as PNG | Planned     |
-| 4     | Auto-start & unlock event handling | Planned     |
-| 5     | Direct2D native rendering engine | Future      |
-| 6     | Cloud sync / collaborative notes | Idea        |
-
-See [docs/architecture.md](docs/architecture.md) for module-level breakdowns.
-
----
-
-## Running Tests
-
-```bash
-dotnet test
+```
+Pictures/DeskScribe/
 ```
 
-Tests live under `/tests` and follow the MSTest convention.
+App config (last saved image path):
+
+```
+AppData/Roaming/DeskScribe/config.json
+```
+
+---
+
+# 🗺 Roadmap
+
+- v1.1.x — Settings window
+- v1.2.x — Color picker + eraser
+- v1.3.x — Multi-screen support
+- v2.x — Vector engine + persistent projects
+
+---
+
+# 🐞 Reporting Issues
+
+Found a bug?  
+Open an issue here:  
+https://github.com/Ashisane/DeskScribe/issues
+
+Please include:
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshot (if relevant)
+- Windows version
 
 ---
 
