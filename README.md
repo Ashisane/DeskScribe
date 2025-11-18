@@ -141,7 +141,7 @@ dotnet run --project src/DeskScribe.App
 
 | Shortcut | Action |
 |---------|--------|
-| **Alt + D** | Toggle draw/view mode |
+| **Ctrl + D** | Toggle draw/view mode |
 | **Ctrl + S** | Save canvas as transparent PNG |
 | **Ctrl + O** | Load last saved PNG |
 | **Ctrl + B** | Set saved PNG as desktop wallpaper |
