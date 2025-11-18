@@ -177,3 +177,15 @@ wwwroot/lib/
 .idea/.idea.pluginName/
 .idea/system/
 .idea/plugins
+
+############################
+# Build output
+############################
+bin/
+obj/
+publish/
+*.exe
+*.msi
+*.zip
+!DeskScribeInstaller.iss
+

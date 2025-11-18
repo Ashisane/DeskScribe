@@ -8,16 +8,14 @@
         AllowsTransparency="True"
         Background="#01000000"
         Topmost="True"
-        KeyDown="OnKeyDown">
+        KeyDown="OnKeyDown"
+        Icon="Resources/app.ico">
 
     <Grid x:Name="RootGrid">
-        <Image x:Name="BackgroundImage"
-               Stretch="UniformToFill"
-               Opacity="1"
-               IsHitTestVisible="False" />
-    
-        <Canvas x:Name="DrawCanvas"
-                Background="#02000000" />
-    </Grid>
+        <!-- Background PNG (non-interactive) -->
+        <Image x:Name="BackgroundImage" Stretch="UniformToFill" IsHitTestVisible="False" />
 
+        <!-- Drawing canvas (must be focusable) -->
+        <Canvas x:Name="DrawCanvas" Background="Transparent" Focusable="True" />
+    </Grid>
 </Window>
