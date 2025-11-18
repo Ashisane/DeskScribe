@@ -8,7 +8,8 @@
         AllowsTransparency="True"
         Background="#01000000"
         Topmost="True"
-        KeyDown="OnKeyDown">
+        KeyDown="OnKeyDown"
+        Icon="Resources/app.ico">
 
     <Grid x:Name="RootGrid">
         <!-- Background PNG (non-interactive) -->

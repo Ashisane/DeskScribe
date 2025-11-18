@@ -1,29 +1,87 @@
 ﻿<div align="center">
 
-# DeskScribe
-### Draw. Doodle. Think — directly on your desktop.
+![Preview](docs/deskscribe.png)
+### Draw. Doodle. Think.
 
-A lightweight transparent overlay that lets you sketch, annotate, and capture ideas instantly without switching apps.
+A lightweight transparent overlay for Windows that lets you sketch ideas instantly using a global hotkey.
+
 
 </div>
 
 ---
 
-## Features (v0.3.0)
+# 🚀 Overview
 
-- Fullscreen transparent drawing overlay
-- Adjustable brush colors (Ctrl + K)
-- Adjustable brush thickness (Ctrl + + / Ctrl + -)
-- Undo last stroke (Ctrl + Z)
-- Clear entire board (Ctrl + C)
-- Save your drawing as a transparent PNG (Ctrl + S)
-- Load your last saved sketch (Ctrl + O)
-- Set drawing as desktop wallpaper (Ctrl + B)
-- Close overlay instantly (Esc)
+**DeskScribe** is a minimal, fast, distraction-free overlay tool for Windows.  
+Press **Ctrl + D** anytime → a transparent whiteboard appears over your desktop.  
+Draw, annotate, ideate — without switching apps or losing flow.
 
-DeskScribe is designed to stay out of your way and be available exactly when you need it.
+Perfect for:
+- Thinking out loud
+- Planning workflows
+- Quick math and outlines
+- Coding/architecture notes
+- Teaching, explaining, screen recording
 
 ---
+
+# ✨ Features (v1.0.0)
+
+### Core Drawing
+- Transparent fullscreen overlay
+- Freehand drawing
+- Brush color cycle — **Ctrl + K**
+- Brush thickness **Ctrl + +** and **Ctrl + -**
+- Undo last stroke — **Ctrl + Z**
+- Clear canvas — **Ctrl + C**
+
+### Saving & Loading
+- Save canvas as PNG — **Ctrl + S**
+- Load last saved image — **Ctrl + O**
+- Set saved PNG as wallpaper — **Ctrl + B**
+
+### System-Level Features
+- Global hotkey → **Ctrl + D** opens DeskScribe from anywhere
+- Runs from system tray (show/hide/exit)
+- Autostarts with Windows
+- Installer included (via Inno Setup)
+
+---
+
+# 📦 Download
+
+➡️ **Download the latest version:**  
+https://github.com/Ashisane/DeskScribe/releases/latest
+
+You’ll find:
+- `DeskScribe-Setup.exe`
+
+---
+
+# 🛠 Installation
+
+### Option 1 — Installer (recommended)
+1. Download `DeskScribe-Setup.exe`
+2. Run installer
+3. DeskScribe will appear in your system tray
+4. Press **Ctrl + D** to open the overlay
+
+---
+
+# 🎨 Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Toggle overlay | **Ctrl + D** |
+| Save PNG | **Ctrl + S** |
+| Load last PNG | **Ctrl + O** |
+| Set as wallpaper | **Ctrl + B** |
+| Undo | **Ctrl + Z** |
+| Clear canvas | **Ctrl + C** |
+| Change brush color | **Ctrl + K** |
+| Brush size + | **Ctrl + +** |
+| Brush size - | **Ctrl + -** |
+| Hide overlay | **Esc** |
 
 ## Tech Stack
 
@@ -107,18 +165,26 @@ AppData/Roaming/DeskScribe/config.json
 
 ---
 
-## Roadmap
+# 🗺 Roadmap
 
-| Version | Features | Status |
-|---------|----------|--------|
-| **v0.1.0** | Transparent overlay + drawing | Done |
-| **v0.2.0** | Colors, brush size, undo, clear | Done |
-| **v0.3.0** | Save, load, set wallpaper | Done |
-| **v0.4.0** | System tray, global hotkeys, auto-start | Planned |
-| **v1.0.0** | Vector stroke files, full stroke persistence | Planned |
-| **Future** | Direct2D renderer, cloud sync | Ideas |
+- v1.1.x — Settings window
+- v1.2.x — Color picker + eraser
+- v1.3.x — Multi-screen support
+- v2.x — Vector engine + persistent projects
 
-See [docs/architecture.md](docs/architecture.md) for module-level breakdowns.
+---
+
+# 🐞 Reporting Issues
+
+Found a bug?  
+Open an issue here:  
+https://github.com/Ashisane/DeskScribe/issues
+
+Please include:
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshot (if relevant)
+- Windows version
 
 ---
 
